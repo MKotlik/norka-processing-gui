@@ -1,2 +1,2 @@
 # norka-processing-gui
-Simple GUI builder for processing
+Simple GUI builder for Processing
