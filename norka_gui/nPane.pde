@@ -48,6 +48,9 @@ public class nPane {
     if (showGrid) {
       displayGrid();
     }
+    for (int i = 0; i < addedElements.size(); i++){
+      addedElements.get(i).display(); //Modify this so this is only true when elements are visible
+    }
   }
   
   //This implements an O(n) search through the elements, and will be inefficient at higher #s of elements
