@@ -18,6 +18,7 @@ public class nPanel {
   private int yLines;
   private int xSpace;
   private int ySpace;
+  private boolean gridVisible;
   //Element processing attributes:
   private ArrayList<nElement> addedElements;  //For optimization, change this to hash/map system later
   private boolean gridVisible;
@@ -44,6 +45,7 @@ public class nPanel {
     yPosCORNER = 0;
     pWidth = width;
     pHeight = height;
+    panelVisible = false;
     backgroundState = "NONE"; //Implies no need to initialize background variables
     gridEnabled = false; //Implies no need to initialize grid variables
     addedElements = new ArrayList<nElement>();
@@ -51,6 +53,7 @@ public class nPanel {
     activeEvent = "";
   }
 
+  //Constructor allows for modified positioning and technically different positionMethods, but only works with CORNER for now
   public nPanel(int positionMethod, int xPos, int yPos, int panelWidth, int panelHeight) {
     String constructorCall = "nPanel(" + positionMethod + "," + xPos + "," + yPos + "," + panelWidth + "," + panelHeight + ")";
     if (validatePositionMethod(positionMethod, constructorCall)) {
@@ -65,6 +68,7 @@ public class nPanel {
       } else { //EXPAND FOR MORE POSITION METHODS LATER!
         System.out.println("ERROR: We apologize, but no positionMethods but CORNER are supported at this time");
       }
+      panelVisible = false;
       backgroundState = "NONE"; //Implies no need to initialize background variables
       gridEnabled = false; //Implies no need to initialize grid variables
       addedElements = new ArrayList<nElement>();
@@ -82,6 +86,7 @@ public class nPanel {
     yPosCORNER = yPos;
     pWidth = panelWidth;
     pHeight = panelHeight;
+    panelVisible = false;
     backgroundState = "NONE"; //Implies no need to initialize background variables
     gridEnabled = false; //Implies no need to initialize grid variables
     addedElements = new ArrayList<nElement>();
@@ -100,7 +105,45 @@ public class nPanel {
   }
 
   //General Panel methods:
+  public void display() {
+    if (panelVisible) {
+      //Implement background here
+      if (gridEnabled && gridVisible) {
+        displayGrid();
+      }
+      for (int i = 0; i < addedElements.size(); i++) {
+        addedElements.get(i).display(); //Modify this so this is only true when elements are visible
+      }
+    }
+  }
 
+  public boolean isPanelVisible() {
+    return panelVisible;
+  }
+
+  public void setPanelVisible(boolean panelState) {
+    panelVisible = panelState;
+  }
+
+  public void showPanel() {
+    panelVisible = true;
+  }
+
+  public void hidePanel() {
+    panelVisible = false;
+  }
+
+  /*
+  public void displayOLD() {
+   if (gridVisible) {
+   displayGrid();
+   }
+   for (int i = 0; i < addedElements.size(); i++) {
+   addedElements.get(i).display(); //Modify this so this is only true when elements are visible
+   }
+   }
+   */
+   
   //Grid methods:
   public void setGrid(boolean state) {
     gridVisible = state;
@@ -124,15 +167,6 @@ public class nPanel {
     }
     for (int j = 0; j < yLines; j++) {
       line(0, j * ySpace, width, j * ySpace);
-    }
-  }
-
-  public void display() {
-    if (gridVisible) {
-      displayGrid();
-    }
-    for (int i = 0; i < addedElements.size(); i++) {
-      addedElements.get(i).display(); //Modify this so this is only true when elements are visible
     }
   }
 
