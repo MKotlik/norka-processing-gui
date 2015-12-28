@@ -5,10 +5,11 @@ void setup() {
   buttonState = 0;
   main = new nPanel();
   TestButton test = new TestButton("test", 200, 200, 50, 50);
+  TestButton bark = new TestButton("bark", 150, 150, 20, 20);
+  bark.setKeyBind('u');
   main.addElement(test);
+  main.addElement(bark);
   main.showPanel();
-  main.update();
-  main.display();
 }
 
 
@@ -26,6 +27,8 @@ void draw() {
       background(255, 0, 0);
       buttonState = 0;
     }
+  } else if (main.getAction().equals("bark-MOUSE_CLICK") || main.getAction().equals("bark-KEY_CLICK")) {
+    background(0, 255, 0);
   }
   main.display();
 }
