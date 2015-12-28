@@ -12,6 +12,8 @@ public class nPanel {
   private String backgroundState; //"NONE" (panel is transparent), "COLOR", or "IMAGE"
   private color backgroundColor;
   private PImage backgroundImage;
+  //Implement grid here when supported!
+  /*
   //Grid attributes:
   private boolean gridEnabled;
   private int xLines;
@@ -19,9 +21,10 @@ public class nPanel {
   private int xSpace;
   private int ySpace;
   private boolean gridVisible;
+  //private String gridType; //when added
+  */
   //Element processing attributes:
   private ArrayList<nElement> addedElements;  //For optimization, change this to hash/map system later
-  private boolean gridVisible;
   private String activeElement;
   private String activeEvent;
 
@@ -47,7 +50,7 @@ public class nPanel {
     pHeight = height;
     panelVisible = false;
     backgroundState = "NONE"; //Implies no need to initialize background variables
-    gridEnabled = false; //Implies no need to initialize grid variables
+    //gridEnabled = false; //Implies no need to initialize grid variables
     addedElements = new ArrayList<nElement>();
     activeElement = "";
     activeEvent = "";
@@ -70,7 +73,7 @@ public class nPanel {
       }
       panelVisible = false;
       backgroundState = "NONE"; //Implies no need to initialize background variables
-      gridEnabled = false; //Implies no need to initialize grid variables
+      //gridEnabled = false; //Implies no need to initialize grid variables
       addedElements = new ArrayList<nElement>();
       activeElement = "";
       activeEvent = "";
@@ -88,7 +91,7 @@ public class nPanel {
     pHeight = panelHeight;
     panelVisible = false;
     backgroundState = "NONE"; //Implies no need to initialize background variables
-    gridEnabled = false; //Implies no need to initialize grid variables
+    //gridEnabled = false; //Implies no need to initialize grid variables
     addedElements = new ArrayList<nElement>();
     activeElement = "";
     activeEvent = "";
@@ -108,14 +111,28 @@ public class nPanel {
   public void display() {
     if (panelVisible) {
       //Implement background here
+      //Implement grid here when supported!
+      /*
       if (gridEnabled && gridVisible) {
         displayGrid();
       }
+      */
       for (int i = 0; i < addedElements.size(); i++) {
         addedElements.get(i).display(); //Modify this so this is only true when elements are visible
       }
     }
   }
+
+  /*
+  public void displayOLD() {
+   if (gridVisible) {
+   displayGrid();
+   }
+   for (int i = 0; i < addedElements.size(); i++) {
+   addedElements.get(i).display(); //Modify this so this is only true when elements are visible
+   }
+   }
+   */
 
   public boolean isPanelVisible() {
     return panelVisible;
@@ -133,42 +150,48 @@ public class nPanel {
     panelVisible = false;
   }
 
-  /*
-  public void displayOLD() {
-   if (gridVisible) {
-   displayGrid();
-   }
-   for (int i = 0; i < addedElements.size(); i++) {
-   addedElements.get(i).display(); //Modify this so this is only true when elements are visible
-   }
-   }
-   */
+  /* ADDITIONAL METHODS:
+   - get...() for all of the position variables
+   - set...() for all of the position variables
+   - setPositionMethod() should automatically recalculate xPosCorner & yPosCorner
+   - setXPos & setYPos should modify xPosCorner & yPosCorner according to current positionMethod
    
-  //Grid methods:
-  public void setGrid(boolean state) {
-    gridVisible = state;
-  }
+   - get...() for pWidth & pHeight
+   - set...() for pWidth & pHeight
+   */
 
-  //Alternate way of Grid-control
+  //Grid methods:
+  //Grid is unsupported as of now!
+  /* Grid needs:
+  - a gridType attribute to determine segmenting
+  - get...() & set...() methods for all grid attributes
+  - the grid setXLines(), setYLines(), setXSpace(), and setYSpace() methods need to take gridType into account
+  - get...(), set...() and show...() and hide...() methods for gridVisible
+  */
   /*
-  public void gridOn(){
+  public void setGrid(boolean state) {
+   gridVisible = state;
+   }
+   
+   //Alternate way of Grid-control
+   public void gridOn(){
    showGrid = true;
    }
    
    public void gridOff(){
    showGrid = false;
    }
+   
+   public void displayGrid() {
+   stroke(255, 0, 0);
+   for (int i = 1; i <= xLines; i++) {
+   line(i * xSpace, 0, i * xSpace, height);
+   }
+   for (int j = 0; j < yLines; j++) {
+   line(0, j * ySpace, width, j * ySpace);
+   }
+   }
    */
-
-  public void displayGrid() {
-    stroke(255, 0, 0);
-    for (int i = 1; i <= xLines; i++) {
-      line(i * xSpace, 0, i * xSpace, height);
-    }
-    for (int j = 0; j < yLines; j++) {
-      line(0, j * ySpace, width, j * ySpace);
-    }
-  }
 
   //Element processing methods
   //This implements an O(n) search through the elements, and will be inefficient at higher #s of elements
