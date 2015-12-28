@@ -30,6 +30,10 @@ public abstract class nElement {
   private color backgroundColor;
   private PImage backgroundImage;
   private boolean backgroundVisible;
+  private boolean outlineState;
+  private int outlineWeight;
+  private color outlineColor;
+  private boolean outlineVisible;
 
   //Constructors:
 
@@ -239,4 +243,66 @@ public abstract class nElement {
   public void hideBackground() {
     backgroundVisible = false;
   }
+  
+  public boolean getOutlineState(){
+    return outlineState;
+  }
+  
+  public void setOutlineState(boolean newOutlineState){
+    outlineState = newOutlineState;
+    if (newOutlineState == true){
+      outlineColor = 0;
+      outlineWeight = 1;
+    }
+  }
+  
+  public color getOutlineColor() {
+    if (outlineState == true) {
+      return outlineColor;
+    } else {
+      println("Attempted: nElement.getOutlineColor() on nElement with identifier=" + identifier);
+      println("ERROR: this element has no outline. Please define its outline first.");
+      return -1;
+    }
+  }
+  
+  public color getOutlineWeight() {
+    if (outlineState == true) {
+      return outlineWeight;
+    } else {
+      println("Attempted: nElement.getOutlineWeight() on nElement with identifier=" + identifier);
+      println("ERROR: this element has no outline. Please define its outline first.");
+      return -1;
+    }
+  }
+  
+  public void setOutlineColor(int newOutlineColor){
+    outlineColor = newOutlineColor;
+  }
+  
+  public void setOutlineWeight(int newOutlineWeight){
+    outlineWeight = newOutlineWeight;
+  }
+  
+  public void setOutline(int newOutlineWeight, int newOutlineColor){
+    outlineWeight = newOutlineWeight;
+    outlineColor = newOutlineColor;
+  }
+  
+  public boolean isOutlineVisible(){
+    return backgroundVisible;
+  }
+  
+  public void setOutlineVisible(boolean newVisibility){
+    outlineVisible = newVisibility;
+  }
+  
+  public void showOutline(){
+    outlineVisible = true;
+  }
+  
+  public void hideOutline(){
+    outlineVisible = false;
+  }
+  
 }

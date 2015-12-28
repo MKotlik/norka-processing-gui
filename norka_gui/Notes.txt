@@ -1,3 +1,5 @@
 Note, restructure the GUI so that the highest class is an nElement, and nPanel inherets from it as well.
 By default, nPanels themselves should be unclickable, but restructure nElement so that they all have an update() by default.
 nPanel update() runs the update() of all nElements bound to it.
+
+- Add hover functionality
