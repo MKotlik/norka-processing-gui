@@ -51,7 +51,7 @@ public class nPanel {
     yPosCORNER = 0;
     pWidth = width;
     pHeight = height;
-    panelVisible = false;
+    panelVisible = true;
     backgroundState = "NONE"; //Implies no need to initialize background variables
     //gridEnabled = false; //Implies no need to initialize grid variables
     addedElements = new ArrayList<nElement>();
@@ -76,7 +76,7 @@ public class nPanel {
       } else { //EXPAND FOR MORE POSITION METHODS LATER!
         System.out.println("ERROR: We apologize, but no positionMethods but CORNER are supported at this time");
       }
-      panelVisible = false;
+      panelVisible = true;
       backgroundState = "NONE"; //Implies no need to initialize background variables
       //gridEnabled = false; //Implies no need to initialize grid variables
       addedElements = new ArrayList<nElement>();
@@ -96,7 +96,7 @@ public class nPanel {
     yPosCORNER = yPos;
     pWidth = panelWidth;
     pHeight = panelHeight;
-    panelVisible = false;
+    panelVisible = true;
     backgroundState = "NONE"; //Implies no need to initialize background variables
     //gridEnabled = false; //Implies no need to initialize grid variables
     addedElements = new ArrayList<nElement>();

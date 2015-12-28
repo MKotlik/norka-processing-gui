@@ -9,7 +9,7 @@ void setup() {
   bark.setKeyBind('u');
   main.addElement(test);
   main.addElement(bark);
-  main.showPanel();
+  //main.showPanel(); //Unnecessary, panel visible by default
 }
 
 
@@ -23,12 +23,16 @@ void draw() {
     if (buttonState == 0) {
       background(0);
       buttonState = 1;
+      //main.hidePanel();
     } else {
       background(255, 0, 0);
       buttonState = 0;
+      //main.showPanel();
     }
   } else if (main.getAction().equals("bark-MOUSE_CLICK") || main.getAction().equals("bark-KEY_CLICK")) {
     background(0, 255, 0);
+  } else if (main.getAction().equals("bark-MOUSE_HOVER")) {
+    background(0, 0, 255);
   }
   main.display();
 }
