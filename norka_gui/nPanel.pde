@@ -170,7 +170,7 @@ public class nPanel {
           activeEvent = "KEY_PRESS";
           elementActivated = true;
         }
-      } else if (currentElement.checkMouse(nMouseX,nMouseY)) { //Non-rectangular elements supported as long as checkMouse functions correctly
+      } else if (currentElement.checkMouse(nMouseX, nMouseY)) { //Non-rectangular elements supported as long as checkMouse functions correctly
         if (currentElement.isMouseClickable() && nMousePressed) {
           activeElement = currentElement.getIdentifier();
           activeEvent = "MOUSE_PRESS";

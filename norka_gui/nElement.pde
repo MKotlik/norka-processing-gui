@@ -30,7 +30,7 @@ public abstract class nElement {
     this.pWidth = pWidth;
     this.pHeight = pHeight;
   }
-  
+
   //Additional Feature: Construct based on given shape.
 
   public String getIdentifier() {
