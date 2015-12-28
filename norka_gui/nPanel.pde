@@ -1,15 +1,28 @@
 public class nPanel {
-  private int pWidth;
-  private int pHeight;
+  //General panel attributes:
+  private int xPos; //Tied to positioning-method
+  private int yPos; //Tied to positioning-method
+  private int positionMethod; //CORNER = 0, CORNERS = 1, RADIUS = 2, CENTER = 3
+  private int pWidth; //Width in pixels
+  private int pHeight; //Height in pixels
+  private boolean panelVisible; //Determines whether display() functions
+  //Panel background attributes:
+  private String backgroundState; //"NONE", "COLOR", or "IMAGE"
+  private color backgroundColor;
+  private PImage backgroundImage;
+  //Grid attributes:
+  private boolean gridEnabled;
   private int xLines;
   private int yLines;
   private int xSpace;
   private int ySpace;
-  private ArrayList<nElement> addedElements = new ArrayList<nElement>(); //For optimization, change this to hash/map system later
-  private boolean showGrid;
+  //Element processing attributes:
+  private ArrayList<nElement> addedElements;  //For optimization, change this to hash/map system later
+  private boolean gridVisible;
   private String activeElement;
   private String activeEvent;
 
+  //Constructors:
   public nPanel(int pWidth, int pHeight, int xLines, int yLines) {
     this.pWidth = pWidth;
     this.pHeight = pHeight;
@@ -18,9 +31,25 @@ public class nPanel {
     xSpace = pWidth / xLines;
     ySpace = pHeight / yLines;
   }
-
+  
+  public nPanel(){
+    positionMethod = CORNER;
+    xPos = 0;
+    yPos = 0;
+    pWidth = width;
+    pHeight = height;
+    backgroundState = "NONE"; //Implies no need to initialize background variables
+    gridEnabled = false; //Implies no need to initialize grid variables
+    addedElements = new ArrayList<nElement>();
+    activeElement = "";
+    activeEvent = "";
+  }
+  
+  //General Panel methods:
+  
+  //Grid methods:
   public void setGrid(boolean state) {
-    showGrid = state;
+    gridVisible = state;
   }
 
   //Alternate way of Grid-control
@@ -45,7 +74,7 @@ public class nPanel {
   }
 
   public void display() {
-    if (showGrid) {
+    if (gridVisible) {
       displayGrid();
     }
     for (int i = 0; i < addedElements.size(); i++){
@@ -53,6 +82,7 @@ public class nPanel {
     }
   }
   
+  //Element processing methods
   //This implements an O(n) search through the elements, and will be inefficient at higher #s of elements
   public void addElement(nElement newElement){ //Alternatively could just call it add(...)
     //Checks that new element has unique identifier, since all elements are identifier-referenced
