@@ -15,18 +15,19 @@ public class nPanel {
   //Implement grid here when supported!
   /*
   //Grid attributes:
-  private boolean gridEnabled;
-  private int xLines;
-  private int yLines;
-  private int xSpace;
-  private int ySpace;
-  private boolean gridVisible;
-  //private String gridType; //when added
-  */
+   private boolean gridEnabled;
+   private int xLines;
+   private int yLines;
+   private int xSpace;
+   private int ySpace;
+   private boolean gridVisible;
+   //private String gridType; //when added
+   */
   //Element processing attributes:
   private ArrayList<nElement> addedElements;  //For optimization, change this to hash/map system later
-  private String activeElement;
-  private String activeEvent;
+  //Only supports one-at-a-time events for now. Expand later to support simultaenous key and mouse action.
+  private String activeElement; //"NONE" (default), or element identifier
+  private String activeEvent; //"NONE" (default), "MOUSE_PRESS", "MOUSE_HOVER", or "KEY_PRESS"
 
   //Constructors:
   /*
@@ -52,8 +53,8 @@ public class nPanel {
     backgroundState = "NONE"; //Implies no need to initialize background variables
     //gridEnabled = false; //Implies no need to initialize grid variables
     addedElements = new ArrayList<nElement>();
-    activeElement = "";
-    activeEvent = "";
+    activeElement = "NONE";
+    activeEvent = "NONE";
   }
 
   //Constructor allows for modified positioning and technically different positionMethods, but only works with CORNER for now
@@ -75,8 +76,8 @@ public class nPanel {
       backgroundState = "NONE"; //Implies no need to initialize background variables
       //gridEnabled = false; //Implies no need to initialize grid variables
       addedElements = new ArrayList<nElement>();
-      activeElement = "";
-      activeEvent = "";
+      activeElement = "NONE";
+      activeEvent = "NONE";
     }
   }
 
@@ -93,8 +94,8 @@ public class nPanel {
     backgroundState = "NONE"; //Implies no need to initialize background variables
     //gridEnabled = false; //Implies no need to initialize grid variables
     addedElements = new ArrayList<nElement>();
-    activeElement = "";
-    activeEvent = "";
+    activeElement = "NONE";
+    activeEvent = "NONE";
   }
 
   private boolean validatePositionMethod(int positionMethod, String constructorCall) {
@@ -114,9 +115,9 @@ public class nPanel {
       //Implement grid here when supported!
       /*
       if (gridEnabled && gridVisible) {
-        displayGrid();
-      }
-      */
+       displayGrid();
+       }
+       */
       for (int i = 0; i < addedElements.size(); i++) {
         addedElements.get(i).display(); //Modify this so this is only true when elements are visible
       }
@@ -150,6 +151,40 @@ public class nPanel {
     panelVisible = false;
   }
 
+  public void update() {
+    activeElement = "NONE";
+    activeEvent = "NONE";
+    boolean elementActivated = false;
+    int nMouseX = mouseX;
+    int nMouseY = mouseY;
+    boolean nMousePressed = mousePressed;
+    int nKey = key;
+    int nKeyCode = keyCode;
+    boolean nKeyPressed = keyPressed;
+    int i = 0;
+    while (i < addedElements.size() && !elementActivated) {
+      nElement currentElement = addedElements.get(i);
+      if (nKeyPressed & currentElement.isKeyClickable()) {
+        if ((nKey != CODED && nKey == currentElement.getKeyBind()) || (nKey == CODED && nKeyCode == currentElement.getKeyBind())) {
+          activeElement = currentElement.getIdentifier();
+          activeEvent = "KEY_PRESS";
+          elementActivated = true;
+        }
+      } else if (currentElement.checkMouse(nMouseX,nMouseY)) { //Non-rectangular elements supported as long as checkMouse functions correctly
+        if (currentElement.isMouseClickable() && nMousePressed) {
+          activeElement = currentElement.getIdentifier();
+          activeEvent = "MOUSE_PRESS";
+          elementActivated = true;
+        } else if (currentElement.isHoverable()) {
+          activeElement = currentElement.getIdentifier();
+          activeEvent = "MOUSE_HOVER";
+          elementActivated = true;
+        }
+      }
+      i++;
+    }
+  }
+
   /* ADDITIONAL METHODS:
    - get...() for all of the position variables
    - set...() for all of the position variables
@@ -163,11 +198,11 @@ public class nPanel {
   //Grid methods:
   //Grid is unsupported as of now!
   /* Grid needs:
-  - a gridType attribute to determine segmenting
-  - get...() & set...() methods for all grid attributes
-  - the grid setXLines(), setYLines(), setXSpace(), and setYSpace() methods need to take gridType into account
-  - get...(), set...() and show...() and hide...() methods for gridVisible
-  */
+   - a gridType attribute to determine segmenting
+   - get...() & set...() methods for all grid attributes
+   - the grid setXLines(), setYLines(), setXSpace(), and setYSpace() methods need to take gridType into account
+   - get...(), set...() and show...() and hide...() methods for gridVisible
+   */
   /*
   public void setGrid(boolean state) {
    gridVisible = state;

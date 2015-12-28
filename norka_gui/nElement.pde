@@ -4,6 +4,7 @@ public abstract class nElement {
   private boolean acceptHover;
   private boolean acceptKey;
   private int keyBind;
+  //All positions are relative to the window, not to the panel
   private int xLinePos;
   private int yLinePos;
   private int xPixelPos;
@@ -29,6 +30,8 @@ public abstract class nElement {
     this.pWidth = pWidth;
     this.pHeight = pHeight;
   }
+  
+  //Additional Feature: Construct based on given shape.
 
   public String getIdentifier() {
     return identifier;
@@ -38,27 +41,27 @@ public abstract class nElement {
     identifier = newIdentifier;
   }
 
-  public boolean checkHover() {
+  public boolean isHoverable() {
     return acceptHover;
   }
 
-  public void setHover(boolean newHoverState) {
+  public void setHoverable(boolean newHoverState) {
     acceptHover = newHoverState;
   }
 
-  public boolean checkClick() {
+  public boolean isMouseClickable() {
     return acceptClick;
   }
 
-  public void setClick(boolean newClickState) {
+  public void setMouseClickable(boolean newClickState) {
     acceptClick = newClickState;
   }
 
-  public boolean checkKey() {
+  public boolean isKeyClickable() {
     return acceptKey;
   }
 
-  public void setKeyState(boolean newKeyState) {
+  public void setKeyClickable(boolean newKeyState) {
     acceptKey = newKeyState;
   }
 
@@ -106,6 +109,8 @@ public abstract class nElement {
   public int getPixelHeight() {
     return pHeight;
   }
+
+  public abstract boolean checkMouse(int nMouseX, int nMouseY);
 
   public abstract void display();
 }

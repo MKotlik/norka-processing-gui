@@ -1,9 +1,9 @@
 void setup() {
-  size(400, 400);
-  background(255);
-  nPanel main = new nPanel(400, 400, 10, 10);
-  //main.setGrid(true);
-  main.addElement(new TestButton("test",40,40,10,10));
+  size(400,400);
+  nPanel main = new nPanel();
+  TestButton test = new TestButton("test", 200, 200, 50, 50);
+  main.addElement(test);
+  main.showPanel();
   main.display();
 }
 
