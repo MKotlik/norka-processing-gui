@@ -1,4 +1,4 @@
-public class nPane {
+public class nPanel {
   private int pWidth;
   private int pHeight;
   private int xLines;
@@ -10,7 +10,7 @@ public class nPane {
   private String activeElement;
   private String activeEvent;
 
-  public nPane(int pWidth, int pHeight, int xLines, int yLines) {
+  public nPanel(int pWidth, int pHeight, int xLines, int yLines) {
     this.pWidth = pWidth;
     this.pHeight = pHeight;
     this.xLines = xLines;
