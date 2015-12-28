@@ -1,9 +1,6 @@
 public abstract class nElement {
+  //General panel attributes
   private String identifier;
-  private boolean acceptClick;
-  private boolean acceptHover;
-  private boolean acceptKey;
-  private int keyBind;
   //All positions are relative to the window, not to the panel
   private int xLinePos;
   private int yLinePos;
@@ -13,8 +10,19 @@ public abstract class nElement {
   private int lineHeight;
   private int pWidth;
   private int pHeight;
-
-
+  
+  //Interactivity attributes
+  private boolean acceptMousePress;
+  private boolean acceptMouseClick;
+  private boolean acceptHover;
+  private boolean acceptKeyPress;
+  private boolean acceptKeyClick;
+  private int keyBind;
+  
+  //Need a default constructor
+  
+  //Subdefault constructors need to be modified
+  /*
   public nElement(String identifier) {
     this.identifier = identifier;
     acceptClick = false;
@@ -22,6 +30,7 @@ public abstract class nElement {
     acceptKey = false;
     keyBind = 0;
   }
+  */
 
   public nElement(String identifier, int xPixelPos, int yPixelPos, int pWidth, int pHeight) {
     this.identifier = identifier;
@@ -50,19 +59,36 @@ public abstract class nElement {
   }
 
   public boolean isMouseClickable() {
-    return acceptClick;
+    return acceptMouseClick;
   }
 
   public void setMouseClickable(boolean newClickState) {
-    acceptClick = newClickState;
+    acceptMouseClick = newClickState;
+  }
+  
+  public boolean isMousePressable() {
+    return acceptMousePress;
   }
 
+  public void setMousePressable(boolean newPressState) {
+    acceptMousePress = newPressState;
+  }
+
+
   public boolean isKeyClickable() {
-    return acceptKey;
+    return acceptKeyClick;
   }
 
   public void setKeyClickable(boolean newKeyState) {
-    acceptKey = newKeyState;
+    acceptKeyClick = newKeyState;
+  }
+  
+  public boolean isKeyPressable() {
+    return acceptKeyPress;
+  }
+
+  public void setKeyPressable(boolean newKeyState) {
+    acceptKeyPress = newKeyState;
   }
 
   public int getKeyBind() {

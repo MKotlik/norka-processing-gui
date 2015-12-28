@@ -5,6 +5,7 @@ public class TestButton extends nElement {
     super(identifier, xPixelPos, yPixelPos, pWidth, pHeight);
     label = "";
     setMouseClickable(true);
+    //setMousePressable(true);
     setKeyClickable(true);
     setKeyBind('y');
     setHoverable(true);

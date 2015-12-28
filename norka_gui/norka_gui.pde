@@ -16,8 +16,9 @@ void draw() {
   if (keyPressed) {
     println(key);
   }
+  println(main.getAction());
   main.update();
-  if (main.getAction().equals("test-MOUSE_PRESS") || main.getAction().equals("test-KEY_PRESS")) {
+  if (main.getAction().equals("test-MOUSE_CLICK") || main.getAction().equals("test-KEY_CLICK")) {
     if (buttonState == 0) {
       background(0);
       buttonState = 1;

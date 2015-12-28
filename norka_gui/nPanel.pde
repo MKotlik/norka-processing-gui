@@ -27,7 +27,9 @@ public class nPanel {
   private ArrayList<nElement> addedElements;  //For optimization, change this to hash/map system later
   //Only supports one-at-a-time events for now. Expand later to support simultaenous key and mouse action.
   private String activeElement; //"NONE" (default), or element identifier
-  private String activeEvent; //"NONE" (default), "MOUSE_PRESS", "MOUSE_HOVER", or "KEY_PRESS"
+  private String activeEvent; //"NONE" (default), "MOUSE_CLICK", "MOUSE_PRESS", "MOUSE_HOVER", "KEY_CLICK", or "KEY_PRESS"
+  private String prevTriggeredElement; //Stores identifier of the the element active at the previous cycle
+  private String prevTriggeredEvent; //Stores event type of the element active at the previous cycle
 
   //Constructors:
   /*
@@ -55,6 +57,8 @@ public class nPanel {
     addedElements = new ArrayList<nElement>();
     activeElement = "NONE";
     activeEvent = "NONE";
+    prevTriggeredElement = "NONE";
+    prevTriggeredEvent = "NONE";
   }
 
   //Constructor allows for modified positioning and technically different positionMethods, but only works with CORNER for now
@@ -78,6 +82,8 @@ public class nPanel {
       addedElements = new ArrayList<nElement>();
       activeElement = "NONE";
       activeEvent = "NONE";
+      prevTriggeredElement = "NONE";
+      prevTriggeredEvent = "NONE";
     }
   }
 
@@ -96,6 +102,8 @@ public class nPanel {
     addedElements = new ArrayList<nElement>();
     activeElement = "NONE";
     activeEvent = "NONE";
+    prevTriggeredElement = "NONE";
+    prevTriggeredEvent = "NONE";
   }
 
   private boolean validatePositionMethod(int positionMethod, String constructorCall) {
@@ -151,40 +159,6 @@ public class nPanel {
     panelVisible = false;
   }
 
-  public void update() {
-    activeElement = "NONE";
-    activeEvent = "NONE";
-    boolean elementActivated = false;
-    int nMouseX = mouseX;
-    int nMouseY = mouseY;
-    boolean nMousePressed = mousePressed;
-    int nKey = key;
-    int nKeyCode = keyCode;
-    boolean nKeyPressed = keyPressed;
-    int i = 0;
-    while (i < addedElements.size() && !elementActivated) {
-      nElement currentElement = addedElements.get(i);
-      if (nKeyPressed & currentElement.isKeyClickable()) {
-        if ((nKey != CODED && nKey == currentElement.getKeyBind()) || (nKey == CODED && nKeyCode == currentElement.getKeyBind())) {
-          activeElement = currentElement.getIdentifier();
-          activeEvent = "KEY_PRESS";
-          elementActivated = true;
-        }
-      } else if (currentElement.checkMouse(nMouseX, nMouseY)) { //Non-rectangular elements supported as long as checkMouse functions correctly
-        if (currentElement.isMouseClickable() && nMousePressed) {
-          activeElement = currentElement.getIdentifier();
-          activeEvent = "MOUSE_PRESS";
-          elementActivated = true;
-        } else if (currentElement.isHoverable()) {
-          activeElement = currentElement.getIdentifier();
-          activeEvent = "MOUSE_HOVER";
-          elementActivated = true;
-        }
-      }
-      i++;
-    }
-  }
-
   /* ADDITIONAL METHODS:
    - get...() for all of the position variables
    - set...() for all of the position variables
@@ -229,6 +203,63 @@ public class nPanel {
    */
 
   //Element processing methods
+  public void update() {
+    //Updating and resetting element & event instance vars:
+    activeElement = "NONE";
+    activeEvent = "NONE";
+    //Local function vars:
+    boolean elementActivated = false;
+    //Storing position interaction global vars in case they get modified during computation
+    int nMouseX = mouseX;
+    int nMouseY = mouseY;
+    boolean nMousePressed = mousePressed;
+    int nKey = key;
+    int nKeyCode = keyCode;
+    boolean nKeyPressed = keyPressed;
+    int i = 0;
+    while (i < addedElements.size() && !elementActivated) {
+      nElement currentElement = addedElements.get(i);
+      if (!nKeyPressed && prevTriggeredElement.equals(currentElement.getIdentifier()) && prevTriggeredEvent.equals("KEY_PRESS") && currentElement.isKeyClickable()) {
+        activeElement = currentElement.getIdentifier();
+        activeEvent = "KEY_CLICK";
+        elementActivated = true;
+        prevTriggeredElement = "NONE";
+        prevTriggeredEvent = "NONE";
+      } else if (nKeyPressed) {
+        if ((nKey != CODED && nKey == currentElement.getKeyBind()) || (nKey == CODED && nKeyCode == currentElement.getKeyBind())) {
+          if (currentElement.isKeyPressable()) {
+            activeElement = currentElement.getIdentifier();
+            activeEvent = "KEY_PRESS";
+            elementActivated = true;
+          }
+          prevTriggeredElement = currentElement.getIdentifier();
+          prevTriggeredEvent = "KEY_PRESS";
+        }
+      } else if (currentElement.checkMouse(nMouseX, nMouseY)) { //Non-rectangular elements supported as long as checkMouse functions correctly
+        if (!nMousePressed && prevTriggeredElement.equals(currentElement.getIdentifier()) && prevTriggeredEvent.equals("MOUSE_PRESS") && currentElement.isMouseClickable()) {
+          activeElement = currentElement.getIdentifier();
+          activeEvent = "MOUSE_CLICK";
+          elementActivated = true;
+          prevTriggeredElement = "NONE";
+          prevTriggeredEvent = "NONE";
+        } else if (nMousePressed) {
+          if (currentElement.isMousePressable()) {
+            activeElement = currentElement.getIdentifier();
+            activeEvent = "MOUSE_PRESS";
+            elementActivated = true;
+          }
+          prevTriggeredElement = currentElement.getIdentifier();
+          prevTriggeredEvent = "MOUSE_PRESS";
+        } else if (currentElement.isHoverable()) {
+          activeElement = currentElement.getIdentifier();
+          activeEvent = "MOUSE_HOVER";
+          elementActivated = true;
+        }
+      }
+      i++;
+    }
+  }
+
   //This implements an O(n) search through the elements, and will be inefficient at higher #s of elements
   public void addElement(nElement newElement) { //Alternatively could just call it add(...)
     //Checks that new element has unique identifier, since all elements are identifier-referenced
