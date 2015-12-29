@@ -46,6 +46,7 @@ public abstract class nElement {
     visible = true;
     //All interactivity booleans should be false by default
     backgroundState = "NONE";
+    //Outline attributes implied false and 0
   }
 
   public nElement(String identifier, int xPixelPos, int yPixelPos, int pWidth, int pHeight) {
@@ -56,6 +57,7 @@ public abstract class nElement {
     this.pHeight = pHeight;
     visible = true;
     backgroundState = "NONE";
+    //Outline attributes implied false and 0
   }
 
   //Additional Feature: Construct based on given shape.
@@ -284,7 +286,14 @@ public abstract class nElement {
     outlineWeight = newOutlineWeight;
   }
   
+  public void setOutline(){
+    outlineState = true;
+    outlineWeight = 1;
+    outlineColor = 0;
+  }
+  
   public void setOutline(int newOutlineWeight, int newOutlineColor){
+    outlineState = true;
     outlineWeight = newOutlineWeight;
     outlineColor = newOutlineColor;
   }
