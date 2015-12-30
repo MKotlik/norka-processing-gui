@@ -189,9 +189,19 @@ public abstract class nElement {
     return backgroundState;
   }
 
+  //I am not sure that this should be public...
+  //It might be better if people just set a background color or an image and that determines what happens
   public void setBackgroundState(String newState) {
     if (newState.equals("NONE") || newState.equals("COLOR") || newState.equals("IMAGE")) {
       backgroundState = newState;
+      /*
+      if (backgroundState.equals("COLOR")){
+        backgroundColor = color(255);
+      }
+      if (backgroundState.equals("IMAGE")){
+        //Uhhh, what do we do?
+      }
+      */
     } else {
       println("Attempted: nElement.setBackgroundState(" + newState + ") on nElement with identifier=" + identifier);
       println("ERROR: invalid backgroundState type. Please use NONE, COLOR, or IMAGE");

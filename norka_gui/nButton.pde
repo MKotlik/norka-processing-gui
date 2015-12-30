@@ -74,8 +74,21 @@ public class nButton extends nElement {
   //get methods for label size, color, and font
   
   public void display() {
-    if (isBackgroundVisible()){
-      
+    if (isOutlineVisible() && getOutlineState() == true){
+      stroke(getOutlineColor());
+      strokeWeight(getOutlineWeight());
+    } else {
+      noStroke();
+    }
+    if (isBackgroundVisible() && ! getBackgroundState().equals("NONE")){
+      if (getBackgroundState().equals("COLOR")){
+        fill(getBackgroundColor());
+      } else if (getBackgroundState().equals("IMAGE")){
+        noFill();
+        //Implement background image support here!
+      }
+    } else {
+      noFill();
     }
   }
 
