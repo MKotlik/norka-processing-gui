@@ -5,93 +5,95 @@ public class nButton extends nElement {
   private int labelSize;
   private PFont labelFont;
   private color labelColor;
-  
+
   //Constructors:
-  public nButton(){
+  public nButton() {
     super();
     setMouseClickable(true);
     setOutline();
     showOutline();
     label = "";
   }
-  
-  public nButton(String identifier, int xPixelPos, int yPixelPos, int pWidth, int pHeight){
+
+  public nButton(String identifier, int xPixelPos, int yPixelPos, int pWidth, int pHeight) {
     super(identifier, xPixelPos, yPixelPos, pWidth, pHeight);
     setMouseClickable(true);
     setOutline();
     showOutline();
     label = "";
   }
-  
+
   //Label methods:
-  public boolean isLabelVisible(){
+  public boolean isLabelVisible() {
     return labelVisible;
   }
-  
-  public void setLabelVisible(boolean newVisibility){
+
+  public void setLabelVisible(boolean newVisibility) {
     labelVisible = newVisibility;
   }
-  
-  public void showLabel(){
+
+  public void showLabel() {
     labelVisible = true;
   }
-  
-  public void hideLabel(){
+
+  public void hideLabel() {
     labelVisible = false;
   }
-  
-  public String getLabel(){
+
+  public String getLabel() {
     return label;
   }
-  
-  public void setLabel(String newLabel){
+
+  public void setLabel(String newLabel) {
     label = newLabel;
   }
-  
-  public void setLabelSize(int newSize){
+
+  public void setLabelSize(int newSize) {
     labelSize = newSize;
   }
-  
-  public void setLabelColor(color newColor){
+
+  public void setLabelColor(color newColor) {
     labelColor = newColor;
   }
-  
-  public void setLabelFont(PFont newFont){
+
+  public void setLabelFont(PFont newFont) {
     labelFont = newFont;
   }
-  
-  public void setLabel(String newLabel, int newSize, color newColor, PFont newFont){
+
+  public void setLabel(String newLabel, int newSize, color newColor, PFont newFont) {
     label = newLabel;
     labelSize = newSize;
     labelColor = newColor;
     labelFont = newFont;
   }
-  
-  public void setLabel(String newLabel, int newSize, color newColor){
+
+  public void setLabel(String newLabel, int newSize, color newColor) {
     label = newLabel;
     labelSize = newSize;
     labelColor = newColor;
   }
-  
+
   //get methods for label size, color, and font
-  
+
   public void display() {
-    if (isOutlineVisible() && getOutlineState() == true){
+    if (isOutlineVisible() && getOutlineState() == true) {
       stroke(getOutlineColor());
       strokeWeight(getOutlineWeight());
     } else {
       noStroke();
     }
-    if (isBackgroundVisible() && ! getBackgroundState().equals("NONE")){
-      if (getBackgroundState().equals("COLOR")){
+    if (isBackgroundVisible() && ! getBackgroundState().equals("NONE")) {
+      if (getBackgroundState().equals("COLOR")) {
         fill(getBackgroundColor());
-      } else if (getBackgroundState().equals("IMAGE")){
+      } else if (getBackgroundState().equals("IMAGE")) {
         noFill();
         //Implement background image support here!
       }
     } else {
       noFill();
     }
+    rectMode(CORNER);
+    rect(getXPixelPos(), getYPixelPos(), getPixelWidth(), getPixelHeight());
   }
 
   public boolean checkMouse(int nMouseX, int nMouseY) {

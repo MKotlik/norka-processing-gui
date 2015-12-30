@@ -196,12 +196,12 @@ public abstract class nElement {
       backgroundState = newState;
       /*
       if (backgroundState.equals("COLOR")){
-        backgroundColor = color(255);
-      }
-      if (backgroundState.equals("IMAGE")){
-        //Uhhh, what do we do?
-      }
-      */
+       backgroundColor = color(255);
+       }
+       if (backgroundState.equals("IMAGE")){
+       //Uhhh, what do we do?
+       }
+       */
     } else {
       println("Attempted: nElement.setBackgroundState(" + newState + ") on nElement with identifier=" + identifier);
       println("ERROR: invalid backgroundState type. Please use NONE, COLOR, or IMAGE");
@@ -255,19 +255,19 @@ public abstract class nElement {
   public void hideBackground() {
     backgroundVisible = false;
   }
-  
-  public boolean getOutlineState(){
+
+  public boolean getOutlineState() {
     return outlineState;
   }
-  
-  public void setOutlineState(boolean newOutlineState){
+
+  public void setOutlineState(boolean newOutlineState) {
     outlineState = newOutlineState;
-    if (newOutlineState == true){
+    if (newOutlineState == true) {
       outlineColor = 0;
       outlineWeight = 1;
     }
   }
-  
+
   public color getOutlineColor() {
     if (outlineState == true) {
       return outlineColor;
@@ -277,7 +277,7 @@ public abstract class nElement {
       return -1;
     }
   }
-  
+
   public color getOutlineWeight() {
     if (outlineState == true) {
       return outlineWeight;
@@ -287,41 +287,40 @@ public abstract class nElement {
       return -1;
     }
   }
-  
-  public void setOutlineColor(int newOutlineColor){
+
+  public void setOutlineColor(int newOutlineColor) {
     outlineColor = newOutlineColor;
   }
-  
-  public void setOutlineWeight(int newOutlineWeight){
+
+  public void setOutlineWeight(int newOutlineWeight) {
     outlineWeight = newOutlineWeight;
   }
-  
-  public void setOutline(){
+
+  public void setOutline() {
     outlineState = true;
     outlineWeight = 1;
     outlineColor = 0;
   }
-  
-  public void setOutline(int newOutlineWeight, int newOutlineColor){
+
+  public void setOutline(int newOutlineWeight, int newOutlineColor) {
     outlineState = true;
     outlineWeight = newOutlineWeight;
     outlineColor = newOutlineColor;
   }
-  
-  public boolean isOutlineVisible(){
-    return backgroundVisible;
+
+  public boolean isOutlineVisible() {
+    return outlineVisible;
   }
-  
-  public void setOutlineVisible(boolean newVisibility){
+
+  public void setOutlineVisible(boolean newVisibility) {
     outlineVisible = newVisibility;
   }
-  
-  public void showOutline(){
+
+  public void showOutline() {
     outlineVisible = true;
   }
-  
-  public void hideOutline(){
+
+  public void hideOutline() {
     outlineVisible = false;
   }
-  
 }

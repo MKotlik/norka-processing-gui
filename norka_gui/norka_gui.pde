@@ -4,12 +4,21 @@ void setup() {
   size(400, 400);
   background(255);
   mainPanel = new nPanel();
-  nButton test = new nButton ("test", 150, 150, 50, 50);
+  nButton test = new nButton("test", 150, 150, 50, 50);
+  TestButton bark = new TestButton("bark", 0, 0, 20, 20);
+  println(test.isBackgroundVisible());
+  println(test.getBackgroundState());
+  println(test.isOutlineVisible());
+  println(test.getOutlineState());
+  test.setOutlineWeight(2);
+  test.showOutline();
+  println(test.isOutlineVisible());
+  println(test.getOutlineState());
+  //test.setBackgroundColor(color(255,0,0));
+  //test.showBackground();
   mainPanel.addElement(test);
+  mainPanel.addElement(bark);
   mainPanel.display();
-  println(mainPanel.isElementPresent("test"));
-  mainPanel.popElement("adsfasdfa");
-  println(mainPanel.isElementPresent("test"));
 }
 
 void draw() {

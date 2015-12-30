@@ -37,6 +37,7 @@ public class TestButton extends nElement {
 
   public void display() {
     fill(255);
+    //noFill();
     stroke(0);
     rectMode(CORNER); //Change this to Corner mode
     rect(getXPixelPos(), getYPixelPos(), getPixelWidth(), getPixelHeight());
