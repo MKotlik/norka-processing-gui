@@ -11,6 +11,7 @@ public class nButton extends nElement {
     super();
     setMouseClickable(true);
     setOutline();
+    showOutline();
     label = "";
   }
   
@@ -18,6 +19,7 @@ public class nButton extends nElement {
     super(identifier, xPixelPos, yPixelPos, pWidth, pHeight);
     setMouseClickable(true);
     setOutline();
+    showOutline();
     label = "";
   }
   

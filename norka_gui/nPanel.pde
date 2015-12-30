@@ -299,7 +299,48 @@ public class nPanel {
     return elementArray;
   }
 
-  public void removeElement(String identifier) {
+  public boolean isElementPresent(String identifier) {
+    for (int i = 0; i < addedElements.size(); i++){
+      if (addedElements.get(i).getIdentifier().equals(identifier)){
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  public int getElementIndex(String identifier) {
+    for (int i = 0; i < addedElements.size(); i++){
+      if (addedElements.get(i).getIdentifier().equals(identifier)){
+        return i;
+      }
+    }
+    return -1;
+  }
+  
+  public void removeElement(String identifier){
+    int elementIndex = getElementIndex(identifier);
+    if (elementIndex != -1){
+      addedElements.remove(elementIndex);
+    } else {
+      System.out.println("Attempted: nPanel.removeElement(" + identifier + ")");
+      System.out.println("ERROR: An element with this identifier could not be found.");
+    }
+  }
+  
+  public nElement popElement(String identifier){
+    int elementIndex = getElementIndex(identifier);
+    nElement poppedElement = null;
+    if (elementIndex != -1){
+      poppedElement = addedElements.get(elementIndex);
+      addedElements.remove(elementIndex);
+    } else {
+      System.out.println("Attempted: nPanel.popElement(" + identifier + ")");
+      System.out.println("ERROR: An element with this identifier could not be found.");
+    }
+    return poppedElement;
+  }
+
+  public void removeElementOLD(String identifier) {
     boolean removed = false;
     int i = 0;
     while (i < addedElements.size() && removed == false) {
@@ -314,7 +355,7 @@ public class nPanel {
     }
   }
 
-  public nElement popElement(String identifier) {
+  public nElement popElementOLD(String identifier) {
     boolean removed = false;
     int i = 0;
     nElement poppedElement = null;
