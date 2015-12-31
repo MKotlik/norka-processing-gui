@@ -32,17 +32,6 @@ public class nPanel {
   private String prevTriggeredEvent; //Stores event type of the element active at the previous cycle
 
   //Constructors:
-  /*
-  public nPanel(int pWidth, int pHeight, int xLines, int yLines) {
-   this.pWidth = pWidth;
-   this.pHeight = pHeight;
-   this.xLines = xLines;
-   this.yLines = yLines;
-   xSpace = pWidth / xLines;
-   ySpace = pHeight / yLines;
-   }
-   */
-
   public nPanel() {
     positionMethod = CORNER;
     xPos = 0;
@@ -260,24 +249,6 @@ public class nPanel {
     }
   }
 
-  //This implements an O(n) search through the elements, and will be inefficient at higher #s of elements
-  public void addElement(nElement newElement) { //Alternatively could just call it add(...)
-    //Checks that new element has unique identifier, since all elements are identifier-referenced
-    boolean unique = true;
-    int i = 0;
-    while (i < addedElements.size() && unique == true) {
-      if (addedElements.get(i).getIdentifier().equals(newElement.getIdentifier())) {
-        unique = false;
-        System.out.println("Attempted: nPanel.addElement(nElement newElement) on nElement with identifier = " + newElement.getIdentifier());
-        System.out.println("ERROR: Could not add this element. An element with the same identifier is already in the panel.");
-      }
-      i++;
-    }
-    if (unique) {
-      addedElements.add(newElement);
-    }
-  }
-
   public int getElementCount() {
     return addedElements.size();
   }
@@ -317,6 +288,28 @@ public class nPanel {
     return -1;
   }
 
+  //This implements an O(n) search through the elements, and will be inefficient at higher #s of elements
+  public void addElement(nElement newElement) {
+    boolean unique = ! isElementPresent(newElement.getIdentifier());
+    if (unique) {
+      addedElements.add(newElement);
+    } else {
+      System.out.println("Attempted: nPanel.addElement(nElement newElement) on nElement with identifier = " + newElement.getIdentifier());
+      System.out.println("ERROR: Could not add this element. An element with the same identifier is already in the panel.");
+    }
+  }
+
+  public nElement getElement(String identifier) {
+    int elementIndex = getElementIndex(identifier);
+    if (elementIndex != -1) {
+      return addedElements.get(elementIndex);
+    } else {
+      System.out.println("Attempted: nPanel.getElement(" + identifier + ")");
+      System.out.println("ERROR: An element with this identifier could not be found.");
+      return null;
+    }
+  }
+
   public void removeElement(String identifier) {
     int elementIndex = getElementIndex(identifier);
     if (elementIndex != -1) {
@@ -338,39 +331,6 @@ public class nPanel {
       System.out.println("ERROR: An element with this identifier could not be found.");
     }
     return poppedElement;
-  }
-
-  public void removeElementOLD(String identifier) {
-    boolean removed = false;
-    int i = 0;
-    while (i < addedElements.size() && removed == false) {
-      if (addedElements.get(i).getIdentifier().equals(identifier)) {
-        addedElements.remove(i);
-        removed = true;
-      }
-    }
-    if (!removed) {
-      System.out.println("Attempted: nPanel.removeElement(" + identifier + ")");
-      System.out.println("ERROR: An element with this identifier could not be found.");
-    }
-  }
-
-  public nElement popElementOLD(String identifier) {
-    boolean removed = false;
-    int i = 0;
-    nElement poppedElement = null;
-    while (i < addedElements.size() && removed == false) {
-      if (addedElements.get(i).getIdentifier().equals(identifier)) {
-        poppedElement = addedElements.get(i);
-        addedElements.remove(i);
-        removed = true;
-      }
-    }
-    if (!removed) {
-      System.out.println("Attempted: nPanel.removeElement(" + identifier + ")");
-      System.out.println("ERROR: An element with this identifier could not be found.");
-    }
-    return poppedElement; //WARNING, as of now, you can return a null. Make sure to catch it wherever this is used!
   }
 
   public String getActiveElement() {

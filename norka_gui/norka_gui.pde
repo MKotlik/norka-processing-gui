@@ -6,14 +6,18 @@ void setup() {
   mainPanel = new nPanel();
   nButton test = new nButton("test", 175, 175, 50, 50);
   nButton test2 = new nButton("test2", 0, 0, 20, 20);
+  test.setLabel("test");
+  test.showLabel();
   mainPanel.addElement(test);
   mainPanel.addElement(test2);
   //mainPanel.display();
 }
 
 void draw() {
+  clear();
+  background(255);
   mainPanel.update();
-  println(mainPanel.getAction());
+  //println(mainPanel.getAction());
   mainPanel.display();
 }
 

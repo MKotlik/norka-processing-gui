@@ -13,6 +13,7 @@ public class nButton extends nElement {
     setOutline();
     showOutline();
     label = "";
+    labelSize = 16;
   }
 
   public nButton(String identifier, int xPixelPos, int yPixelPos, int pWidth, int pHeight) {
@@ -21,6 +22,7 @@ public class nButton extends nElement {
     setOutline();
     showOutline();
     label = "";
+    labelSize = 16;
   }
 
   //Label methods:
@@ -94,6 +96,15 @@ public class nButton extends nElement {
     }
     rectMode(CORNER);
     rect(getXPixelPos(), getYPixelPos(), getPixelWidth(), getPixelHeight());
+    if (labelVisible) {
+      if (labelFont != null){
+        textFont(labelFont, labelSize);
+      }
+      fill(labelColor);
+      textSize(labelSize);
+      //textAlign(LEFT);
+      text(label, getXPixelPos(), getYPixelPos());
+    }
   }
 
   public boolean checkMouse(int nMouseX, int nMouseY) {
