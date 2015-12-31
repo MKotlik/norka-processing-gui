@@ -1,4 +1,4 @@
-public class nButton extends nElement {
+public class nTextElement extends nElement {
   //Label attributes
   private String label;
   private boolean labelVisible;
@@ -13,7 +13,7 @@ public class nButton extends nElement {
   private int labelYPos;
 
   //Constructors:
-  public nButton() {
+  public nTextElement() {
     super();
     setMouseClickable(true);
     setOutline();
@@ -26,7 +26,7 @@ public class nButton extends nElement {
     labelYPos = getYPixelPos() + getPixelHeight()/2;
   }
 
-  public nButton(String identifier, int xPixelPos, int yPixelPos, int pWidth, int pHeight) {
+  public nTextElement(String identifier, int xPixelPos, int yPixelPos, int pWidth, int pHeight) {
     super(identifier, xPixelPos, yPixelPos, pWidth, pHeight);
     setMouseClickable(true);
     setOutline();
