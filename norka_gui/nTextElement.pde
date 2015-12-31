@@ -15,7 +15,6 @@ public class nTextElement extends nElement {
   //Constructors:
   public nTextElement() {
     super();
-    setMouseClickable(true);
     setOutline();
     showOutline();
     label = "";
@@ -28,7 +27,6 @@ public class nTextElement extends nElement {
 
   public nTextElement(String identifier, int xPixelPos, int yPixelPos, int pWidth, int pHeight) {
     super(identifier, xPixelPos, yPixelPos, pWidth, pHeight);
-    setMouseClickable(true);
     setOutline();
     showOutline();
     label = "";

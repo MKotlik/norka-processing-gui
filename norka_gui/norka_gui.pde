@@ -6,13 +6,16 @@ void setup() {
   mainPanel = new nPanel();
   nButton test = new nButton("test", 175, 175, 50, 50);
   nButton test2 = new nButton("test2", 0, 0, 50, 50);
+  nLabel testLabel = new nLabel("label", 0, 50, 50, 50);
   test.setLabel("test");
   test.setLabelHorizontalAlign(LEFT);
   test.showLabel();
   test2.setLabel("2tset");
   test2.showLabel();
+  testLabel.hideOutline();
   mainPanel.addElement(test);
   mainPanel.addElement(test2);
+  mainPanel.addElement(testLabel);
   //mainPanel.display();
 }
 
