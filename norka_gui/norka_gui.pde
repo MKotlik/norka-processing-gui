@@ -5,9 +5,12 @@ void setup() {
   background(255);
   mainPanel = new nPanel();
   nButton test = new nButton("test", 175, 175, 50, 50);
-  nButton test2 = new nButton("test2", 0, 0, 20, 20);
+  nButton test2 = new nButton("test2", 0, 0, 50, 50);
   test.setLabel("test");
+  test.setLabelHorizontalAlign(LEFT);
   test.showLabel();
+  test2.setLabel("2tset");
+  test2.showLabel();
   mainPanel.addElement(test);
   mainPanel.addElement(test2);
   //mainPanel.display();
@@ -17,7 +20,11 @@ void draw() {
   clear();
   background(255);
   mainPanel.update();
-  //println(mainPanel.getAction());
+  println(mainPanel.getAction());
+  if (mainPanel.getAction().equals("test-MOUSE_CLICK")){
+    ((nButton)mainPanel.getElement("test")).setLabel("click");
+    //((nButton)mainPanel.getElement("test")).setBackgroundColor(color(255,0,0));
+  }
   mainPanel.display();
 }
 

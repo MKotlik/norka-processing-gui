@@ -5,6 +5,12 @@ public class nButton extends nElement {
   private int labelSize;
   private PFont labelFont;
   private color labelColor;
+  //private int leftLabelMargin; //Not sure if I want to use margins
+  //private int topLabelMargin;
+  private int labelHorizontalAlign;
+  private int labelVerticalAlign;
+  private int labelXPos;
+  private int labelYPos;
 
   //Constructors:
   public nButton() {
@@ -14,6 +20,10 @@ public class nButton extends nElement {
     showOutline();
     label = "";
     labelSize = 16;
+    labelHorizontalAlign = CENTER;
+    labelVerticalAlign = CENTER;
+    labelXPos = getXPixelPos() + getPixelWidth()/2;
+    labelYPos = getYPixelPos() + getPixelHeight()/2;
   }
 
   public nButton(String identifier, int xPixelPos, int yPixelPos, int pWidth, int pHeight) {
@@ -23,6 +33,10 @@ public class nButton extends nElement {
     showOutline();
     label = "";
     labelSize = 16;
+    labelHorizontalAlign = CENTER;
+    labelVerticalAlign = CENTER;
+    labelXPos = getXPixelPos() + getPixelWidth()/2;
+    labelYPos = getYPixelPos() + getPixelHeight()/2;
   }
 
   //Label methods:
@@ -50,6 +64,19 @@ public class nButton extends nElement {
     label = newLabel;
   }
 
+  public void setLabel(String newLabel, int newSize, color newColor, PFont newFont) {
+    label = newLabel;
+    labelSize = newSize;
+    labelColor = newColor;
+    labelFont = newFont;
+  }
+
+  public void setLabel(String newLabel, int newSize, color newColor) {
+    label = newLabel;
+    labelSize = newSize;
+    labelColor = newColor;
+  }
+
   public void setLabelSize(int newSize) {
     labelSize = newSize;
   }
@@ -62,17 +89,51 @@ public class nButton extends nElement {
     labelFont = newFont;
   }
 
-  public void setLabel(String newLabel, int newSize, color newColor, PFont newFont) {
-    label = newLabel;
-    labelSize = newSize;
-    labelColor = newColor;
-    labelFont = newFont;
+  //Not sure if I want to use these
+  /*
+  public void setLeftLabelMargin(int margin) {
+   leftLabelMargin = margin;
+   }
+   
+   public void setTopLabelMargin(int margin){
+   topLabelMargin = margin;
+   }
+   */
+
+  public void setLabelHorizontalAlign (int alignValue) {
+    labelHorizontalAlign = alignValue;
+    resetDefaultLabelPositions();
   }
 
-  public void setLabel(String newLabel, int newSize, color newColor) {
-    label = newLabel;
-    labelSize = newSize;
-    labelColor = newColor;
+  public void setLabelVerticalAlign (int alignValue) {
+    labelVerticalAlign = alignValue;
+    resetDefaultLabelPositions();
+  }
+
+  public void setLabelAlignments(int horizontalAlign, int verticalAlign) {
+    labelHorizontalAlign = horizontalAlign;
+    labelVerticalAlign = verticalAlign;
+    resetDefaultLabelPositions();
+  }
+
+  private void resetDefaultLabelPositions() {
+    if (labelHorizontalAlign == CENTER && labelVerticalAlign == CENTER) {
+      labelXPos = getXPixelPos() + getPixelWidth()/2;
+      labelYPos = getYPixelPos() + getPixelHeight()/2;
+    } else if (labelHorizontalAlign == LEFT && labelVerticalAlign == CENTER){
+      labelXPos = getXPixelPos() + 2;
+      labelYPos = getYPixelPos() + getPixelHeight()/2;
+    } else {
+      println("INFO: We apologize, but alignments other than CENTER, CENTER & LEFT, CENTER, are not supported right now.");
+    }
+  }
+
+  public void setLabelXPos(int newXPos) {
+    labelXPos = newXPos;
+  }
+
+  public void setLabelYPos(int newYPos) {
+    labelYPos = newYPos;
   }
 
   //get methods for label size, color, and font
@@ -97,13 +158,14 @@ public class nButton extends nElement {
     rectMode(CORNER);
     rect(getXPixelPos(), getYPixelPos(), getPixelWidth(), getPixelHeight());
     if (labelVisible) {
-      if (labelFont != null){
+      if (labelFont != null) {
         textFont(labelFont, labelSize);
       }
+      textAlign(labelHorizontalAlign, labelVerticalAlign);
       fill(labelColor);
       textSize(labelSize);
-      //textAlign(LEFT);
-      text(label, getXPixelPos(), getYPixelPos());
+      //text(label, getXPixelPos() + leftLabelMargin, getYPixelPos() + topLabelMargin);
+      text(label, labelXPos, labelYPos);
     }
   }
 
